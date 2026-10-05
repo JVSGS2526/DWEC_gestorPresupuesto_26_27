@@ -118,7 +118,11 @@ function borrarGasto(id) {
     return false;
 }
 
-function calcularTotalGastos() {}
+function calcularTotalGastos() {
+    return gastos.reduce((total, gasto) => total + gasto.valor, 0);
+    
+}
+
 function calcularBalance() {}
 
 // Comprueba que el valor sea un número válido y no negativo
