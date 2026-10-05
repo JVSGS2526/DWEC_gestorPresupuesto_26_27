@@ -108,7 +108,16 @@ function anyadirGasto(gasto) {
     }
 }
 
-function borrarGasto(id) {}
+// Función para borrar un gasto del array de gastos dado su id
+function borrarGasto(id) {
+    const index = gastos.findIndex((gasto) => gasto.id === id);
+    if (index !== -1) {
+        gastos.splice(index, 1);
+        return true;
+    }
+    return false;
+}
+
 function calcularTotalGastos() {}
 function calcularBalance() {}
 
