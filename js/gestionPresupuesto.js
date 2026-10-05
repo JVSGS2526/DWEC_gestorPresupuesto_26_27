@@ -25,13 +25,28 @@ function mostrarPresupuesto() {
     
 }
 
-function CrearGasto(descripcion, valor) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     {
+
         this.descripcion = descripcion;
-        this.valor = esNumeroNoNegativo(valor) ? valor : 0;
+
+        this.valor = 0;
+        if (esNumeroNoNegativo(valor)) {
+            this.valor = valor;
+        }
     
         this.mostrarGasto = function () {
             return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
+        };
+
+        this.mostrarGastoCompleto = function () {
+            let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
+            texto += `Fecha: ${new Date(this.fecha).toLocaleString()}\n`;
+            texto += "Etiquetas:\n";
+            for (const etiqueta of this.etiquetas) {
+                texto += `- ${etiqueta}\n`;
+            }
+            return texto;
         };
     
         this.actualizarDescripcion = function (nuevaDescripcion) {
@@ -43,18 +58,57 @@ function CrearGasto(descripcion, valor) {
                 this.valor = nuevoValor;
             }
         };
+        this.actualizarFecha = function (nuevaFecha) {
+            if (esFechaValida(nuevaFecha)) {
+                this.fecha = Date.parse(nuevaFecha);
+            }
+        };
+ 
+        this.anyadirEtiquetas = function (...nuevasEtiquetas) {
+            for (const etiqueta of nuevasEtiquetas) {
+                if (!this.etiquetas.includes(etiqueta)) {
+                    this.etiquetas.push(etiqueta);
+                }
+            }
+        };
+
+        this.borrarEtiquetas = function (...etiquetasABorrar) {
+            this.etiquetas = this.etiquetas.filter(
+                (etiqueta) => !etiquetasABorrar.includes(etiqueta)
+            );
+        };
+    
+        // Inicialización de fecha y etiquetas
+        this.fecha = Date.now();
+        if (esFechaValida(fecha)) {
+            this.fecha = Date.parse(fecha);
+        }
+    
+        this.etiquetas = [];
+        this.anyadirEtiquetas(...etiquetas);
+
     }
+
 }
+
 
 function listarGastos() {
     return gastos;
 }
 
+function anyadirGasto(gasto) {}
+function borrarGasto(id) {}
+function calcularTotalGastos() {}
+function calcularBalance() {}
+
 // Comprueba que el valor sea un número válido y no negativo
 function esNumeroNoNegativo(valor) {
     return typeof valor === "number" && !isNaN(valor) && valor >= 0;
 }
-
+// Comprueba que la fecha sea una cadena de texto válida que pueda ser parseada a un objeto Date
+function esFechaValida(fecha) {
+    return typeof fecha === "string" && !isNaN(Date.parse(fecha));
+}
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
