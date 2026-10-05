@@ -6,6 +6,7 @@ let presupuesto = 0
 let gastos = [];
 let idGasto = 0;
 
+// Función para actualizar el presupuesto
 function actualizarPresupuesto(nuevoPresupuesto) {
     // TODO
     if (typeof nuevoPresupuesto === "number" && nuevoPresupuesto >= 0) {
@@ -19,12 +20,14 @@ function actualizarPresupuesto(nuevoPresupuesto) {
 
 }
 
+// Función para mostrar el presupuesto actual
 function mostrarPresupuesto() {
     // TODO
     return `Tu presupuesto actual es de ${presupuesto} €`;
     
 }
 
+ // Función constructora para crear un gasto
 function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
     {
 
@@ -91,12 +94,20 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 
 }
 
-
+// Función para listar los gastos almacenados en el array de gastos
 function listarGastos() {
     return gastos;
 }
 
-function anyadirGasto(gasto) {}
+//función para añadir un gasto al array de gastos, asignándole un id único y devolviendo dicho id
+function anyadirGasto(gasto) {
+    if (gasto instanceof CrearGasto) {
+        gasto.id = idGasto++;
+        gastos.push(gasto);
+        return gasto.id;
+    }
+}
+
 function borrarGasto(id) {}
 function calcularTotalGastos() {}
 function calcularBalance() {}
