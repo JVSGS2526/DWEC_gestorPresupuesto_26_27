@@ -46,6 +46,10 @@ function CrearGasto(descripcion, valor) {
     }
 }
 
+function listarGastos() {
+    return gastos;
+}
+
 // Comprueba que el valor sea un número válido y no negativo
 function esNumeroNoNegativo(valor) {
     return typeof valor === "number" && !isNaN(valor) && valor >= 0;
