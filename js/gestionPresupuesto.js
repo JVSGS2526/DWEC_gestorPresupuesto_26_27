@@ -120,10 +120,12 @@ function borrarGasto(id) {
 
 function calcularTotalGastos() {
     return gastos.reduce((total, gasto) => total + gasto.valor, 0);
-    
+
 }
 
-function calcularBalance() {}
+function calcularBalance() {
+    return presupuesto - calcularTotalGastos();
+}
 
 // Comprueba que el valor sea un número válido y no negativo
 function esNumeroNoNegativo(valor) {
