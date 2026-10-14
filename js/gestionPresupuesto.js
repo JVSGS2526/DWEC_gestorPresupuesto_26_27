@@ -183,26 +183,61 @@ function esFechaValida(fecha)
 {
     return typeof fecha === "string" && !isNaN(Date.parse(fecha));
 }
-//Función de un parámetro que devolverá un subconjunto de los gastos existentes (variable global gastos). 
-// Se deberá utilizar la función filter. El parámetro será un objeto que podrá tener las siguientes propiedades:
-//fechaDesde - Fecha mínima de creación del gasto. Su valor deberá ser un string con formato 
-// válido que pueda entender la función Date.parse.
-//fechaHasta - Fecha máxima de creación del gasto. Su valor deberá ser un string con formato 
-// válido que pueda entender la función Date.parse.
-//valorMinimo - Valor mínimo del gasto.
-//valorMaximo - Valor máximo del gasto.
-//descripcionContiene - Trozo de texto que deberá aparecer en la descripción. Deberá hacerse 
-//la comparación de manera que no se distingan mayúsculas de minúsculas.
-//etiquetasTiene - Array de etiquetas: si un gasto contiene alguna de las etiquetas indicadas 
-//en este parámetro, se deberá devolver en el resultado. Deberá hacerse la comparación de manera 
-//que no se distingan mayúsculas de minúsculas.
 
+// Función para filtrar los gastos según los criterios especificados en el objeto filtros
 function filtrarGastos(filtros = {}) 
 {
+    return gastos.filter((gasto) => 
+    {
+        const filtrosNormalizados = filtros ?? {};
 
+        if (filtrosNormalizados.fechaDesde && Date.parse(filtrosNormalizados.fechaDesde) > gasto.fecha) 
+        {
+            return false;
+        }
+
+        if (filtrosNormalizados.fechaHasta && Date.parse(filtrosNormalizados.fechaHasta) < gasto.fecha) 
+        {
+            return false;
+        }
+
+        if (filtrosNormalizados.valorMinimo !== undefined && gasto.valor < filtrosNormalizados.valorMinimo) 
+        {
+            return false;
+        }
+
+        if (filtrosNormalizados.valorMaximo !== undefined && gasto.valor > filtrosNormalizados.valorMaximo) 
+        {
+            return false;
+        }
+
+        if (filtrosNormalizados.descripcionContiene) 
+        {
+            const textoBuscado = filtrosNormalizados.descripcionContiene.toLowerCase();
+            const descripcion = gasto.descripcion.toLowerCase();
+            if (!descripcion.includes(textoBuscado)) 
+            {
+                return false;
+            }
+        }
+
+        if (Array.isArray(filtrosNormalizados.etiquetasTiene) && filtrosNormalizados.etiquetasTiene.length > 0) 
+        {
+            const etiquetasDeseadas = filtrosNormalizados.etiquetasTiene.map((etiqueta) => etiqueta.toLowerCase());
+            const etiquetasGasto = gasto.etiquetas.map((etiqueta) => etiqueta.toLowerCase());
+
+            const tieneEtiqueta = etiquetasDeseadas.some((etiqueta) => etiquetasGasto.includes(etiqueta));
+            if (!tieneEtiqueta) 
+            {
+                return false;
+            }
+        }
+
+        return true;
+    });
 }
 
-function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde, fechaHasta) 
+function agruparGastos() 
 {
     
 }
