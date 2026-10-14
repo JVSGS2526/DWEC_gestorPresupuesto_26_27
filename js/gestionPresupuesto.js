@@ -9,10 +9,13 @@ let idGasto = 0;
 // Función para actualizar el presupuesto
 function actualizarPresupuesto(nuevoPresupuesto) {
     // TODO
-    if (typeof nuevoPresupuesto === "number" && nuevoPresupuesto >= 0) {
+    if (typeof nuevoPresupuesto === "number" && nuevoPresupuesto >= 0) 
+    {
         presupuesto = nuevoPresupuesto;
         return presupuesto;
-    } else {
+    } 
+    else 
+    {
         console.error("Error: El valor introducido no es un número válido o es negativo.");
         return -1;
     }
@@ -21,69 +24,106 @@ function actualizarPresupuesto(nuevoPresupuesto) {
 }
 
 // Función para mostrar el presupuesto actual
-function mostrarPresupuesto() {
+function mostrarPresupuesto() 
+{
     // TODO
     return `Tu presupuesto actual es de ${presupuesto} €`;
     
 }
 
  // Función constructora para crear un gasto
-function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
+function CrearGasto(descripcion, valor, fecha, ...etiquetas) 
+{
     {
 
         this.descripcion = descripcion;
 
         this.valor = 0;
-        if (esNumeroNoNegativo(valor)) {
+        if (esNumeroNoNegativo(valor)) 
+        {
             this.valor = valor;
         }
     
-        this.mostrarGasto = function () {
+        this.mostrarGasto = function () 
+        {
             return `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €`;
         };
 
-        this.mostrarGastoCompleto = function () {
+        this.mostrarGastoCompleto = function () 
+        {
             let texto = `Gasto correspondiente a ${this.descripcion} con valor ${this.valor} €.\n`;
             texto += `Fecha: ${new Date(this.fecha).toLocaleString()}\n`;
             texto += "Etiquetas:\n";
-            for (const etiqueta of this.etiquetas) {
+            for (const etiqueta of this.etiquetas) 
+            {
                 texto += `- ${etiqueta}\n`;
             }
             return texto;
         };
     
-        this.actualizarDescripcion = function (nuevaDescripcion) {
+        this.actualizarDescripcion = function (nuevaDescripcion) 
+        {
             this.descripcion = nuevaDescripcion;
         };
     
-        this.actualizarValor = function (nuevoValor) {
-            if (esNumeroNoNegativo(nuevoValor)) {
+        this.actualizarValor = function (nuevoValor) 
+        {
+            if (esNumeroNoNegativo(nuevoValor)) 
+            {
                 this.valor = nuevoValor;
             }
         };
-        this.actualizarFecha = function (nuevaFecha) {
-            if (esFechaValida(nuevaFecha)) {
+        this.actualizarFecha = function (nuevaFecha) 
+        {
+            if (esFechaValida(nuevaFecha)) 
+            {
                 this.fecha = Date.parse(nuevaFecha);
             }
         };
  
-        this.anyadirEtiquetas = function (...nuevasEtiquetas) {
-            for (const etiqueta of nuevasEtiquetas) {
-                if (!this.etiquetas.includes(etiqueta)) {
+        this.anyadirEtiquetas = function (...nuevasEtiquetas) 
+        {
+            for (const etiqueta of nuevasEtiquetas) 
+            {
+                if (!this.etiquetas.includes(etiqueta)) 
+                {
                     this.etiquetas.push(etiqueta);
                 }
             }
         };
 
-        this.borrarEtiquetas = function (...etiquetasABorrar) {
-            this.etiquetas = this.etiquetas.filter(
+        this.borrarEtiquetas = function (...etiquetasABorrar) 
+        {
+            this.etiquetas = this.etiquetas.filter
+            (
                 (etiqueta) => !etiquetasABorrar.includes(etiqueta)
             );
+        };
+
+        this.obtenerPeriodoAgrupacion = function (periodo) 
+        {
+            const fecha = new Date(this.fecha);
+            const anyo = fecha.getFullYear();
+            const mes = String(fecha.getMonth() + 1).padStart(2, "0");
+            const dia = String(fecha.getDate()).padStart(2, "0");
+
+            switch (periodo) 
+            {
+                case "dia":
+                    return `${anyo}-${mes}-${dia}`;
+                case "mes":
+                    return `${anyo}-${mes}`;
+                case "anyo":
+                    return `${anyo}`;
+                default:
+                    return `${anyo}-${mes}`;
+            }
         };
     
         // Inicialización de fecha y etiquetas
         this.fecha = Date.now();
-        if (esFechaValida(fecha)) {
+        if (esFechaValida(fecha)) 
+        {
             this.fecha = Date.parse(fecha);
         }
     
@@ -95,12 +135,14 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
 }
 
 // Función para listar los gastos almacenados en el array de gastos
-function listarGastos() {
+function listarGastos() 
+{
     return gastos;
 }
 
 //función para añadir un gasto al array de gastos, asignándole un id único y devolviendo dicho id
-function anyadirGasto(gasto) {
+function anyadirGasto(gasto) 
+{
     if (gasto instanceof CrearGasto) {
         gasto.id = idGasto++;
         gastos.push(gasto);
@@ -109,32 +151,62 @@ function anyadirGasto(gasto) {
 }
 
 // Función para borrar un gasto del array de gastos dado su id
-function borrarGasto(id) {
+function borrarGasto(id) 
+{
     const index = gastos.findIndex((gasto) => gasto.id === id);
-    if (index !== -1) {
+    if (index !== -1) 
+    {
         gastos.splice(index, 1);
         return true;
     }
     return false;
 }
 
-function calcularTotalGastos() {
+function calcularTotalGastos() 
+{
     return gastos.reduce((total, gasto) => total + gasto.valor, 0);
 
 }
 
-function calcularBalance() {
+function calcularBalance() 
+{
     return presupuesto - calcularTotalGastos();
 }
 
 // Comprueba que el valor sea un número válido y no negativo
-function esNumeroNoNegativo(valor) {
+function esNumeroNoNegativo(valor) 
+{
     return typeof valor === "number" && !isNaN(valor) && valor >= 0;
 }
 // Comprueba que la fecha sea una cadena de texto válida que pueda ser parseada a un objeto Date
-function esFechaValida(fecha) {
+function esFechaValida(fecha) 
+{
     return typeof fecha === "string" && !isNaN(Date.parse(fecha));
 }
+//Función de un parámetro que devolverá un subconjunto de los gastos existentes (variable global gastos). 
+// Se deberá utilizar la función filter. El parámetro será un objeto que podrá tener las siguientes propiedades:
+//fechaDesde - Fecha mínima de creación del gasto. Su valor deberá ser un string con formato 
+// válido que pueda entender la función Date.parse.
+//fechaHasta - Fecha máxima de creación del gasto. Su valor deberá ser un string con formato 
+// válido que pueda entender la función Date.parse.
+//valorMinimo - Valor mínimo del gasto.
+//valorMaximo - Valor máximo del gasto.
+//descripcionContiene - Trozo de texto que deberá aparecer en la descripción. Deberá hacerse 
+//la comparación de manera que no se distingan mayúsculas de minúsculas.
+//etiquetasTiene - Array de etiquetas: si un gasto contiene alguna de las etiquetas indicadas 
+//en este parámetro, se deberá devolver en el resultado. Deberá hacerse la comparación de manera 
+//que no se distingan mayúsculas de minúsculas.
+
+function filtrarGastos(filtros = {}) 
+{
+
+}
+
+function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde, fechaHasta) 
+{
+    
+}
+
 
 // NO MODIFICAR A PARTIR DE AQUÍ: exportación de funciones y objetos creados para poder ejecutar los tests.
 // Las funciones y objetos deben tener los nombres que se indican en el enunciado
