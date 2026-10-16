@@ -237,9 +237,37 @@ function filtrarGastos(filtros = {})
     });
 }
 
-function agruparGastos() 
+//En primer lugar se llamará a filtrarGastos para obtener el subconjunto de gastos creados 
+// entre las fechas indicadas y que tengan alguna de las etiquetas proporcionadas en el 
+// parámetro correspondiente.
+
+//Ejecutar reduce sobre el conjunto de gastos filtrados. El valor inicial del acumulador 
+// de reduce será un objeto vacío. Dentro del cuerpo de la función de reduce, para cada gasto 
+// se obtendrá su período de agrupación (a través del método obtenerPeriodoAgrupacion del gasto 
+// y el parámetro periodo), que se utilizará para identificar la propiedad del acumulador sobre
+//  la que se sumará su valor. Así, si periodo = mes, un gasto con fecha 2021-11-01 tendrá un 
+// período de agrupación 2021-11, por lo que su valor se sumará a acc["2021-11"] (siempre que 
+// la variable del acumulador haya recibido el nombre acc en la llamada a reduce). Tienes una 
+// pista sobre cómo proceder en la siguiente pregunta de Stack Overflow.
+
+//El resultado de reduce será el valor de vuelta de la función agruparGastos.
+//1) Realiza una agrupación de gastos por períodos temporales
+function agruparGastos(periodo = "mes", etiquetas = [], fechaDesde, fechaHasta) 
 {
-    
+    const gastosFiltrados = filtrarGastos({ etiquetasTiene: etiquetas, fechaDesde: fechaDesde, fechaHasta: fechaHasta });
+    return gastosFiltrados.reduce((acc, gasto) => 
+    {
+        const periodoAgrupacion = gasto.obtenerPeriodoAgrupacion(periodo);
+        if (acc[periodoAgrupacion] === undefined) 
+        {
+            acc[periodoAgrupacion] = 0;
+        }
+
+        acc[periodoAgrupacion] += gasto.valor;
+        return acc;
+    }, {});
+
+
 }
 
 
