@@ -17,3 +17,36 @@ gP.anyadirGasto(g3)
 gP.anyadirGasto(g4)
 gP.anyadirGasto(g5)
 gP.anyadirGasto(g6)
+
+gPWeb.mostrarDatoEnId("gastos-totales", gP.calcularTotalGastos().toFixed(2));
+
+gPWeb.mostrarDatoEnId("balance-total", gP.calcularBalance().toFixed(2));
+
+for(let gasto of gP.listarGastos()){
+    gPWeb.mostrarGastoWeb("listado-gastos-completo", gasto);
+}
+
+for(let gasto of gP.filtrarGastos({fechaDesde: "2021-9-1", fechaHasta: "2021-9-30"})){
+    gPWeb.mostrarGastoWeb("listado-gastos-filtrado-1", gasto);
+}
+
+for(let gasto of gP.filtrarGastos({valorMinimo: 50, })){
+    gPWeb.mostrarGastoWeb("listado-gastos-filtrado-2", gasto);
+}
+
+for(let gasto of gP.filtrarGastos({valorMinimo: 200, etiquetasTiene: ["seguros"] })){
+    gPWeb.mostrarGastoWeb("listado-gastos-filtrado-3", gasto);
+}
+
+for(let gasto of gP.filtrarGastos({valorMaximo: 50, etiquetasTiene: ["comida", "transporte"] })){
+    gPWeb.mostrarGastoWeb("listado-gastos-filtrado-4", gasto);
+}
+
+gPWeb.mostrarGastosAgrupadosWeb("agrupacion-dia", gP.agruparGastos("dia"), "dia")
+
+gPWeb.mostrarGastosAgrupadosWeb("agrupacion-mes", gP.agruparGastos("mes"), "mes")
+
+gPWeb.mostrarGastosAgrupadosWeb("agrupacion-anyo", gP.agruparGastos("anyo"), "anyo")
+
+
+
