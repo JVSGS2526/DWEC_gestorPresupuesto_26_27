@@ -87,26 +87,13 @@ function repintar(){
 
 }
 
-function mostrarPresupuesto(){
-
+function actualizarPresupuestoWeb(){
+    gP.actualizarPresupuesto(parseInt(prompt("introduzca su presupuesto")))
+    repintar();
 }
 
-function mostrarGastosTotales(){
-
-}
-
-function mostrarBalanceTotal(){
-
-}
-
-function borrarContenido(){
-
-}
-
-function mostrarListadoCompletoGastos(){
-
-}
-
+let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto")
+botonActualizarPresupuesto.addEventListener("click",actualizarPresupuestoWeb)
 
 export{
     mostrarDatoEnId,
