@@ -42,7 +42,16 @@ function mostrarGastoWeb (idElemento,gasto){
         divGastoEtiq.append(spanEtiquetas)
 
     };
-    divGasto.append(divGastoEtiq)
+        divGasto.append(divGastoEtiq)
+
+        let editarBoton = document.createElement("button");
+        editarBoton.textContent = "Editar";
+
+        let editarManejador = new EditarHandle();
+        editarManejador.datosgasto = gasto;
+
+        editarBoton.addEventListener("click", editarManejador);
+        divPersona.append(editarBoton);
 }
 
 
@@ -112,6 +121,11 @@ function nuevoGastoWeb(){
 let botonAnyadirGasto  = document.getElementById("anyadirgasto")
 botonAnyadirGasto.addEventListener("click",nuevoGastoWeb)
 
+function EditarHandle() {
+        this.handleEvent = function(evento) {
+            
+        }
+    }
 
 export{
     mostrarDatoEnId,
