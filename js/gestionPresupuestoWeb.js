@@ -77,7 +77,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 
 function repintar(){
     mostrarDatoEnId("presupuesto", gP.mostrarPresupuesto());//.toFixed(2));
-    mostrarDatoEnId("balance-total", gP.calcularTotalGastos());
+    mostrarDatoEnId("gastos-totales", gP.calcularTotalGastos());
     mostrarDatoEnId("balance-total", gP.calcularBalance());
     document.getElementById("listado-gastos-completo").innerHTML = "";
 
@@ -87,6 +87,7 @@ function repintar(){
 
 }
 
+// Función actualizarPresupuestoWeb y botón actualizarpresupuesto
 function actualizarPresupuestoWeb(){
     gP.actualizarPresupuesto(parseInt(prompt("introduzca su presupuesto")))
     repintar();
@@ -94,6 +95,23 @@ function actualizarPresupuestoWeb(){
 
 let botonActualizarPresupuesto = document.getElementById("actualizarpresupuesto")
 botonActualizarPresupuesto.addEventListener("click",actualizarPresupuestoWeb)
+
+function nuevoGastoWeb(){
+    let des = prompt("introduzca la descripcion");
+    let valor = parseInt(prompt("introduzca el valor"));
+    let fecha = prompt("introduzca la fecha");
+    let etiquetas = prompt("introduzca las etiquetas").split(","); //convierte el string en un array
+    
+
+    let gasto = new gP.CrearGasto(des,valor,fecha,etiquetas);
+    
+    gP.anyadirGasto(gasto);
+    repintar();
+}
+
+let botonAnyadirGasto  = document.getElementById("anyadirgasto")
+botonAnyadirGasto.addEventListener("click",nuevoGastoWeb)
+
 
 export{
     mostrarDatoEnId,
