@@ -48,10 +48,10 @@ function mostrarGastoWeb (idElemento,gasto){
         editarBoton.textContent = "Editar";
 
         let editarManejador = new EditarHandle();
-        editarManejador.datosgasto = gasto;
+        editarManejador.gasto = gasto;
 
         editarBoton.addEventListener("click", editarManejador);
-        divPersona.append(editarBoton);
+        divGasto.append(editarBoton);
 }
 
 
@@ -118,14 +118,23 @@ function nuevoGastoWeb(){
     repintar();
 }
 
-let botonAnyadirGasto  = document.getElementById("anyadirgasto")
-botonAnyadirGasto.addEventListener("click",nuevoGastoWeb)
+
 
 function EditarHandle() {
-        this.handleEvent = function(evento) {
-            
-        }
+    this.handleEvent = function() {
+        let des = prompt("Descripción: ", this.gasto.descripcion);
+        let valor = parseInt(prompt("Valor: ", this.gasto.valor));
+        let fecha = prompt("Fecha: ", this.gasto.fecha);
+        let etiquetas = prompt("Etiquetas: ", this.gasto.etiquetas.join(",")).split(",");
     }
+
+    this.gasto.actualizarDescripcion(des);
+    this.gasto.actualizarValor(valor);
+    this.gasto.actualizarFecha(fecha);
+    this.gasto.anyadirEtiquetas(...etiquetas);
+
+    repintar();
+}
 
 export{
     mostrarDatoEnId,
