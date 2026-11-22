@@ -43,11 +43,11 @@ function mostrarGastoWeb (idElemento,gasto){
 
     };
         divGasto.append(divGastoEtiq)
-
+        //creacion del boton editar en la web
         let editarBoton = document.createElement("button");
         editarBoton.textContent = "Editar";
 
-        let editarManejador = new EditarHandle();
+        let editarManejador = new editarHandle();
         editarManejador.gasto = gasto;
 
         editarBoton.addEventListener("click", editarManejador);
@@ -120,7 +120,7 @@ function nuevoGastoWeb(){
 
 
 
-function EditarHandle() {
+function editarHandle() {
     this.handleEvent = function() {
         let des = prompt("Descripción: ", this.gasto.descripcion);
         let valor = parseInt(prompt("Valor: ", this.gasto.valor));
@@ -135,6 +135,16 @@ function EditarHandle() {
 
     repintar();
 }
+
+function borrarHandle(){
+    this.handleEvent = function(){
+        gP.borrarGasto(this.gasto.id) 
+    }
+    repintar()
+}
+
+
+
 
 export{
     mostrarDatoEnId,
