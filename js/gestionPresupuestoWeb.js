@@ -43,15 +43,28 @@ function mostrarGastoWeb (idElemento,gasto){
 
     };
         divGasto.append(divGastoEtiq)
-        //creacion del boton editar en la web
+
+        //creacion del boton EDITAR en la web
         let editarBoton = document.createElement("button");
         editarBoton.textContent = "Editar";
+        editarBoton.className = "gasto-editar";
 
         let editarManejador = new editarHandle();
         editarManejador.gasto = gasto;
 
         editarBoton.addEventListener("click", editarManejador);
         divGasto.append(editarBoton);
+
+        //creacion del boton BORRAR en la web
+        let borrarBoton = document.createElement("button")
+        borrarBoton.textContent = "Borrar";
+        borrarBoton.className = "gasto-borrar";
+
+        let borrarManejador = new borrarHandle();
+        borrarManejador.gasto = gasto;
+
+        borrarBoton.addEventListener("click", borrarManejador);
+        divGasto.append(borrarBoton);
 }
 
 
