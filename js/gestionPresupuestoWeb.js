@@ -122,10 +122,10 @@ function nuevoGastoWeb(){
 
 function editarHandle() {
     this.handleEvent = function() {
-        let des = prompt("Descripción: ", this.gasto.descripcion);
-        let valor = parseInt(prompt("Valor: ", this.gasto.valor));
-        let fecha = prompt("Fecha: ", this.gasto.fecha);
-        let etiquetas = prompt("Etiquetas: ", this.gasto.etiquetas.join(",")).split(",");
+        let des = prompt("Descripción: " + this.gasto.descripcion);
+        let valor = parseInt(prompt("Valor: " + this.gasto.valor));
+        let fecha = prompt("Fecha: " + this.gasto.fecha);
+        let etiquetas = prompt("Etiquetas: " + this.gasto.etiquetas.join(",")).split(",");
     }
 
     this.gasto.actualizarDescripcion(des);
@@ -143,7 +143,14 @@ function borrarHandle(){
     repintar()
 }
 
+function borrarEtiquetasHandle(){
+    this.handleEvent = function(){
+        let etiquetasAEliminar = prompt("Etiquetas existentes: " + this.gasto.etiquetas.join(",") + ". Escribe cuales quieres eliminar:").split(",");
+    }
+        this.gasto.borrarEtiquetas(...etiquetasAEliminar)
 
+    repintar()
+}
 
 
 export{
