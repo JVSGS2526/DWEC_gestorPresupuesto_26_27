@@ -20,13 +20,13 @@ function mostrarGastoWeb (idElemento,gasto){
 
     let divGastoFecha = document.createElement("div")
     divGastoFecha.className ="gasto-fecha"
-    divGastoFecha.textContent = gasto.fecha
+    divGastoFecha.textContent = new Date(gasto.fecha).toLocaleDateString("es-ES");// poner fecha legible
     divGasto.append(divGastoFecha)
    
    
     let divGastoValor = document.createElement("div")
     divGastoValor.className = "gasto-valor"
-    divGastoValor.textContent = gasto.valor
+    divGastoValor.textContent = gasto.valor.toFixed(2)
     divGasto.append(divGastoValor)
 
 
@@ -38,7 +38,13 @@ function mostrarGastoWeb (idElemento,gasto){
     for(let etiqueta of gasto.etiquetas) {
         let spanEtiquetas = document.createElement("span")
         spanEtiquetas.className ="gasto-etiquetas-etiqueta"
-        spanEtiquetas.textContent = etiqueta +" "
+        spanEtiquetas.textContent = etiqueta 
+
+        let etiquetaManejador = new borrarEtiquetasHandle();
+        etiquetaManejador.gasto = gasto;
+        etiquetaManejador.etiqueta = etiqueta;
+
+        spanEtiquetas.addEventListener("click", etiquetaManejador);
         divGastoEtiq.append(spanEtiquetas)
 
     };
@@ -98,7 +104,7 @@ function mostrarGastosAgrupadosWeb(idElemento, agrup, periodo) {
 }
 
 function repintar(){
-    mostrarDatoEnId("presupuesto", gP.mostrarPresupuesto());//.toFixed(2));
+    mostrarDatoEnId("presupuesto", gP.mostrarPresupuesto());
     mostrarDatoEnId("gastos-totales", gP.calcularTotalGastos());
     mostrarDatoEnId("balance-total", gP.calcularBalance());
     document.getElementById("listado-gastos-completo").innerHTML = "";
@@ -130,39 +136,41 @@ function nuevoGastoWeb(){
     gP.anyadirGasto(gasto);
     repintar();
 }
-
+document.getElementById("anyadirgasto").addEventListener("click", nuevoGastoWeb);
 
 
 function editarHandle() {
     this.handleEvent = function() {
         let des = prompt("Descripción: " + this.gasto.descripcion);
-        let valor = parseInt(prompt("Valor: " + this.gasto.valor));
+        let valor = parseFloat(prompt("Valor: " + this.gasto.valor));
         let fecha = prompt("Fecha: " + this.gasto.fecha);
         let etiquetas = prompt("Etiquetas: " + this.gasto.etiquetas.join(",")).split(",");
+
+        this.gasto.actualizarDescripcion(des);
+        this.gasto.actualizarValor(valor);
+        this.gasto.actualizarFecha(fecha);
+        this.gasto.anyadirEtiquetas(...etiquetas);
+        repintar();
     }
 
-    this.gasto.actualizarDescripcion(des);
-    this.gasto.actualizarValor(valor);
-    this.gasto.actualizarFecha(fecha);
-    this.gasto.anyadirEtiquetas(...etiquetas);
 
-    repintar();
 }
 
 function borrarHandle(){
     this.handleEvent = function(){
         gP.borrarGasto(this.gasto.id) 
+        repintar()
     }
-    repintar()
+
 }
 
 function borrarEtiquetasHandle(){
     this.handleEvent = function(){
-        let etiquetasAEliminar = prompt("Etiquetas existentes: " + this.gasto.etiquetas.join(",") + ". Escribe cuales quieres eliminar:").split(",");
+        
+        this.gasto.borrarEtiquetas(this.etiqueta);
+        repintar()
     }
-        this.gasto.borrarEtiquetas(...etiquetasAEliminar)
 
-    repintar()
 }
 
 
